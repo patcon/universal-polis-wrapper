@@ -18,7 +18,6 @@
       height: 100%;
     }
   </style>
-  <script src="https://embed.typeform.com/embed.js" async></script>
 </head>
 <body>
   <div id="app"></div>
@@ -63,10 +62,10 @@
         tfDiv.style.height = "100%";
         app.appendChild(tfDiv);
 
-        // Need to re-invoke SDK, because only things already in the DOM when SDK loads will be processed.
-        if (window.typeformEmbed && window.typeformEmbed.makeWidgets) {
-          window.typeformEmbed.makeWidgets();
-        }
+        const tfScript = document.createElement("script");
+        tfScript.src = "https://embed.typeform.com/next/embed.js";
+        tfScript.async = true;
+        document.body.appendChild(tfScript);
 
         // Listen for Typeform submission
         window.onTypeformSubmit = function() {
