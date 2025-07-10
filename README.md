@@ -18,11 +18,31 @@ Return visitors skip the survey and go straight to the Pol.is embed.
 
 A demo typeform and polis conversation (don't worry about spamming).
 
+- Demo Typeform: https://form.typeform.com/to/wFXxYRdJ#xid=xxxxx
+- Demo Polis conversation: https://pol.is/2demo
+
 https://patcon.github.io/universal-polis-wrapper/#wFXxYRdJ/2demo
 
-If your typeform is set up properly (see below), results will look like this:
+If your typeform is set up properly (see below), results in Typeform backend will look like this:
 
 <img width="1369" height="311" alt="Screenshot 2025-07-10 at 4 17 15 PM" src="https://github.com/user-attachments/assets/5055139a-0135-42c9-91fc-0ebc673120ae" />
+
+## Validation
+
+You can also confirm that your xid is logged within Polis like so:
+
+1. Visit your link: `https://patcon.github.io/universal-polis-wrapper/#<your typeform id>/<your polis conversation ID>`
+  - Example: https://patcon.github.io/universal-polis-wrapper/#wFXxYRdJ/2demo
+  - Complete the form, then perform at least one interaction in Polis (e.g., a "pass" vote)
+2. Open the browser console and type `localStorage.polisXid`
+  - note your unique xid in your browser console
+3. Visit: `https://pol.is/api/v3/conversationUuid?conversation_id=<your polis conversation ID>`
+  - Example: https://pol.is/api/v3/conversationUuid?conversation_id=2demo
+  - Returns: `{"conversation_uuid":"9a68ac97-7972-4726-be06-647aa65eaf8d"}`
+4. Visit: `https://pol.is/api/v3/xid/<your conversation uuid>`
+  - Example: https://pol.is/api/v3/xid/9a68ac97-7972-4726-be06-647aa65eaf8d
+  - Returns: a CSV with columns for participant IDs and xids
+  - Confirm that your xid is the last one in the CSV
 
 ---
 
