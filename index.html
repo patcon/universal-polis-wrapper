@@ -18,69 +18,68 @@
       height: 100%;
     }
   </style>
-  <script src="https://embed.typeform.com/embed.js" defer></script>
+  <script id="typeform-sdk" src="https://embed.typeform.com/embed.js"></script>
 </head>
 <body>
   <div id="app"></div>
 
   <script>
-    const app = document.getElementById("app");
+    window.addEventListener("load", () => {
+      const app = document.getElementById("app");
 
-    // Step 1: Get or generate persistent UUID
-    let xid = localStorage.getItem("polisXid");
-    if (!xid) {
-      xid = crypto.randomUUID();
-      localStorage.setItem("polisXid", xid);
-    }
+      // Step 1: Get or generate persistent UUID
+      let xid = localStorage.getItem("polisXid");
+      if (!xid) {
+        xid = crypto.randomUUID();
+        localStorage.setItem("polisXid", xid);
+      }
 
-    // Step 2: Get formId and convoId from hash (e.g. /#abc123/6actc48hc7)
-    const [formId, convoId] = window.location.hash.replace(/^#/, "").split("/").map(s => s.trim());
+      // Step 2: Get formId and convoId from hash (e.g. /#abc123/6actc48hc7)
+      const [formId, convoId] = window.location.hash.replace(/^#/, "").split("/").map(s => s.trim());
 
-    if (!formId || !convoId) {
-      app.innerHTML = '<p style="padding:1rem; font-family:sans-serif">Missing form ID and/or conversation ID. Example: <code>#abc123/6actc48hc7</code></p>';
-      throw new Error("Missing formId and convoId in URL hash");
-    }
+      if (!formId || !convoId) {
+        app.innerHTML = '<p style="padding:1rem; font-family:sans-serif">Missing form ID and/or conversation ID. Example: <code>#abc123/6actc48hc7</code></p>';
+        throw new Error("Missing formId and convoId in URL hash");
+      }
 
-    const isDoneSurvey = localStorage.getItem("isDoneSurvey");
+      const isDoneSurvey = localStorage.getItem("isDoneSurvey");
 
-    if (isDoneSurvey) {
-      loadPolis();
-    } else {
-      const tfScript = document.querySelector('script[src*="typeform.com/embed.js"]');
-      tfScript.addEventListener("load", () => {
+      if (isDoneSurvey) {
+        loadPolis();
+      } else {
         if (window.tf && window.tf.createPopup) {
           loadTypeform();
         } else {
           console.error("Typeform SDK failed to initialize.");
         }
-      });
-    }
+      }
 
-    function loadTypeform() {
-      const url = `https://form.typeform.com/to/${formId}`;
-      const popup = window.tf.createPopup(url, {
-        hidden: { xid },
-        autoClose: 0,
-        open: true,
-        onSubmit: () => {
-          localStorage.setItem("isDoneSurvey", "true");
-          loadPolis();
-        },
-      });
-    }
+      function loadTypeform() {
+        const url = `https://form.typeform.com/to/${formId}`;
+        const popup = window.tf.createPopup(url, {
+          hidden: { xid },
+          autoClose: 0,
+          open: true,
+          onSubmit: () => {
+            localStorage.setItem("isDoneSurvey", "true");
+            loadPolis();
+          },
+        });
+      }
 
-    function loadPolis() {
-      const wrapper = document.createElement("div");
-      wrapper.className = "polis";
-      wrapper.setAttribute("data-conversation_id", convoId);
-      wrapper.setAttribute("data-xid", xid);
-      app.appendChild(wrapper);
+      function loadPolis() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "polis";
+        wrapper.setAttribute("data-conversation_id", convoId);
+        wrapper.setAttribute("data-xid", xid);
+        app.appendChild(wrapper);
 
-      const script = document.createElement("script");
-      script.src = "https://pol.is/embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
+        const script = document.createElement("script");
+        script.src = "https://pol.is/embed.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    });
   </script>
 </body>
 </html>
