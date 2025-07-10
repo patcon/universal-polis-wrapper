@@ -42,12 +42,12 @@
     if (isDoneSurvey) {
       loadPolis();
     } else {
-      // Wait for Typeform SDK to load (deferred)
-      window.addEventListener("DOMContentLoaded", () => {
+      const tfScript = document.querySelector('script[src*="typeform.com/embed.js"]');
+      tfScript.addEventListener("load", () => {
         if (window.tf && window.tf.createPopup) {
           loadTypeform();
         } else {
-          console.error("Typeform SDK did not load in time.");
+          console.error("Typeform SDK failed to initialize.");
         }
       });
     }
