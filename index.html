@@ -63,6 +63,11 @@
         tfDiv.style.height = "100%";
         app.appendChild(tfDiv);
 
+        // Need to re-invoke SDK, because only things already in the DOM when SDK loads will be processed.
+        if (window.typeformEmbed && window.typeformEmbed.makeWidgets) {
+          window.typeformEmbed.makeWidgets();
+        }
+
         // Listen for Typeform submission
         window.onTypeformSubmit = function() {
           localStorage.setItem("isDoneSurvey", "true");
