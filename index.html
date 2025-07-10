@@ -18,7 +18,6 @@
       height: 100%;
     }
   </style>
-  <script id="typeform-sdk" src="https://embed.typeform.com/embed.js"></script>
 </head>
 <body>
   <div id="app"></div>
@@ -47,24 +46,27 @@
       if (isDoneSurvey) {
         loadPolis();
       } else {
-        if (window.tf && window.tf.createPopup) {
-          loadTypeform();
-        } else {
-          console.error("Typeform SDK failed to initialize.");
-        }
-      }
+        // Create anchor with Typeform data attributes
+        const anchor = document.createElement("a");
+        anchor.style.display = "none";
+        anchor.setAttribute("data-tf-popup", formId);
+        anchor.setAttribute("data-tf-hidden", `xid=${xid}`);
+        anchor.setAttribute("data-tf-auto-open", "100");
+        anchor.setAttribute("data-tf-transitive-search-params", "false");
+        document.body.appendChild(anchor);
 
-      function loadTypeform() {
-        const url = `https://form.typeform.com/to/${formId}`;
-        const popup = window.tf.createPopup(url, {
-          hidden: { xid },
-          autoClose: 0,
-          open: true,
-          onSubmit: () => {
-            localStorage.setItem("isDoneSurvey", "true");
-            loadPolis();
-          },
-        });
+        const tfScript = document.createElement("script");
+        tfScript.src = "https://embed.typeform.com/next/embed.js";
+        tfScript.async = true;
+        tfScript.onload = () => {
+          window.addEventListener("message", (event) => {
+            if (event.data?.type === "form-submit") {
+              localStorage.setItem("isDoneSurvey", "true");
+              loadPolis();
+            }
+          });
+        };
+        document.body.appendChild(tfScript);
       }
 
       function loadPolis() {
