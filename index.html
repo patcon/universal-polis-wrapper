@@ -33,9 +33,13 @@
       localStorage.setItem("polisXid", xid);
     }
 
-    // Step 2: Get final segment as slug
-    const segments = window.location.pathname.split("/").filter(Boolean);
-    const slug = segments[segments.length - 1];
+    // Step 2: Get formId and convoId from hash (e.g. /#abc123/6actc48hc7)
+    const [formId, convoId] = window.location.hash.replace(/^#/, "").split("/").map(s => s.trim());
+
+    if (!formId || !convoId) {
+      app.innerHTML = '<p style="padding:1rem; font-family:sans-serif">Missing form ID and/or conversation ID. Example: <code>#abc123/6actc48hc7</code></p>';
+      throw new Error("Missing formId and convoId in URL hash");
+    }
 
     const isDoneSurvey = localStorage.getItem("isDoneSurvey");
 
@@ -53,7 +57,7 @@
     }
 
     function loadTypeform() {
-      const url = `https://form.typeform.com/to/${slug}`;
+      const url = `https://form.typeform.com/to/${formId}`;
       const popup = window.tf.createPopup(url, {
         hidden: { xid },
         autoClose: 0,
@@ -68,7 +72,7 @@
     function loadPolis() {
       const wrapper = document.createElement("div");
       wrapper.className = "polis";
-      wrapper.setAttribute("data-conversation_id", slug);
+      wrapper.setAttribute("data-conversation_id", convoId);
       wrapper.setAttribute("data-xid", xid);
       app.appendChild(wrapper);
 
