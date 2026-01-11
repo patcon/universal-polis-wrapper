@@ -28,9 +28,19 @@
       // Step 1: Get or generate persistent UUID
       let xid = localStorage.getItem("polisXid");
       if (!xid) {
-        xid = crypto.randomUUID();
+        if (crypto.randomUUID) {
+          xid = crypto.randomUUID();
+        } else {
+          // RFC4122-ish fallback
+          // Works when on HTTP and crypto methods unavailable.
+          xid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
+        }
         localStorage.setItem("polisXid", xid);
-      }
+}
 
       // Step 2: Get formId and convoId from hash (e.g. /#abc123/6actc48hc7)
       const [formId, convoId] = window.location.hash.replace(/^#/, "").split("/").map(s => s.trim());
