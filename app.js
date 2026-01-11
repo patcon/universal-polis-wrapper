@@ -1,4 +1,16 @@
 window.addEventListener("load", () => {
+  // ---- HTTPS warning banner ----
+  const httpsWarning = document.getElementById("https-warning");
+
+  if (window.location.protocol !== "https:") {
+    if (httpsWarning) {
+      httpsWarning.hidden = false;
+    }
+    console.warn(
+      "[UPW] Page is not served over HTTPS — Polis survey interactions will not work properly"
+    );
+  }
+
   const app = document.getElementById("app");
 
   // Step 1: Get or generate persistent UUID

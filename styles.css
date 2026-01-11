@@ -15,3 +15,23 @@ iframe {
   border: none;
   width: 100%;
 }
+
+#https-warning {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  background: #b00020;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+/* Push app content down slightly so it's not hidden */
+#https-warning + #app {
+  min-height: calc(100% - 2.2rem);
+}
