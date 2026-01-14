@@ -1,6 +1,38 @@
 // ---- Hardcoded overrides (set to null to use URL hash) ----
-const TYPEFORM_ID = null;      // e.g. "wFXxYRdJ"
-const POLIS_CONVO_ID = null;   // e.g. "2demo"
+// e.g. "wFXxYRdJ"
+const TYPEFORM_ID = null;
+// e.g. "2demo" (for https://pol.is/2demo)
+// OR "https://poliscommunity.crown-shy.com/3jmh9rmhwe"
+const POLIS_CONVO_ID_OR_URL = null;
+
+function resolvePolis(convoIdOrUrl) {
+  const DEFAULT_BASE_URL = "https://pol.is";
+
+  if (!convoIdOrUrl) return null;
+
+  // Full URL provided
+  if (/^https?:\/\//i.test(convoIdOrUrl)) {
+    try {
+      const url = new URL(convoIdOrUrl);
+      const convoId = url.pathname.replace(/^\/+/, "");
+
+      if (!convoId) return null;
+
+      return {
+        convoId,
+        polisBaseUrl: `${url.protocol}//${url.host}`
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  // Bare conversation ID
+  return {
+    convoId: convoIdOrUrl,
+    polisBaseUrl: DEFAULT_BASE_URL
+  };
+}
 
 window.addEventListener("load", () => {
   // ---- HTTPS warning banner ----
@@ -48,12 +80,12 @@ window.addEventListener("load", () => {
       ? TYPEFORM_ID
       : hashFormId;
   
-  const convoId =
-    POLIS_CONVO_ID !== null
-      ? POLIS_CONVO_ID
-      : hashConvoId;
+  const polisConfig =
+    POLIS_CONVO_ID_OR_URL !== null
+      ? resolvePolis(POLIS_CONVO_ID_OR_URL)
+      : resolvePolis(hashConvoId);
 
-  if (!formId || !convoId) {
+  if (!formId || !polisConfig) {
     app.innerHTML = `
       <p style="padding:1rem; font-family:sans-serif">
         Missing Typeform ID and/or Polis conversation ID.<br />
@@ -61,8 +93,10 @@ window.addEventListener("load", () => {
         Example: <code>#wFXxYRdJ/2demo</code> (copy & refresh)
       </p>
     `;
-    throw new Error("Missing formId and convoId in URL hash");
+    throw new Error("Missing Typeform ID and Polis Convo ID in URL hash");
   }
+
+  const { convoId, polisBaseUrl } = polisConfig;
 
   const isDoneSurvey = localStorage.getItem("isDoneSurvey");
 
@@ -106,7 +140,7 @@ window.addEventListener("load", () => {
     app.appendChild(wrapper);
 
     const script = document.createElement("script");
-    script.src = "https://pol.is/embed.js";
+    script.src = `${polisBaseUrl}/embed.js`;
     script.async = true;
     document.body.appendChild(script);
   }
