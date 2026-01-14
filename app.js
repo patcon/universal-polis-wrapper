@@ -1,9 +1,9 @@
 // ---- Hardcoded overrides (set to null to use URL hash) ----
 // e.g. "wFXxYRdJ"
-const TYPEFORM_ID = "OBRF9OPm";
+const TYPEFORM_ID = "VGIMYkom";
 // e.g. "2demo" (for https://pol.is/2demo)
 // OR "https://poliscommunity.crown-shy.com/3jmh9rmhwe"
-const POLIS_CONVO_ID_OR_URL = "https://poliscommunity.crown-shy.com/3jmh9rmhwe";
+const POLIS_CONVO_ID_OR_URL = "https://poliscommunity.crown-shy.com/6iby5j5fep";
 
 function resolvePolis(convoIdOrUrl) {
   const DEFAULT_BASE_URL = "https://pol.is";
