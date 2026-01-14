@@ -3,7 +3,7 @@
 const TYPEFORM_ID = "T6W91eo1";
 // e.g. "2demo" (for https://pol.is/2demo)
 // OR "https://poliscommunity.crown-shy.com/3jmh9rmhwe"
-const POLIS_CONVO_ID_OR_URL = "https://poliscommunity.crown-shy.com/6iby5j5fep";
+const POLIS_CONVO_ID_OR_URL = "https://poliscommunity.crown-shy.com/3ejmeteukf";
 
 function resolvePolis(convoIdOrUrl) {
   const DEFAULT_BASE_URL = "https://pol.is";
