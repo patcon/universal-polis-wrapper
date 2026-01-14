@@ -1,3 +1,7 @@
+// ---- Hardcoded overrides (set to null to use URL hash) ----
+const TYPEFORM_ID = null;      // e.g. "wFXxYRdJ"
+const POLIS_CONVO_ID = null;   // e.g. "2demo"
+
 window.addEventListener("load", () => {
   // ---- HTTPS warning banner ----
   const httpsWarning = document.getElementById("https-warning");
@@ -34,16 +38,27 @@ window.addEventListener("load", () => {
   }
 
   // Step 2: Get formId and convoId from hash (e.g. /#abc123/6actc48hc7)
-  const [formId, convoId] = window.location.hash
+  const [hashFormId, hashConvoId] = window.location.hash
     .replace(/^#/, "")
     .split("/")
-    .map(s => s.trim());
+    .map(s => s.trim() || null);
+
+  const formId =
+    TYPEFORM_ID !== null
+      ? TYPEFORM_ID
+      : hashFormId;
+  
+  const convoId =
+    POLIS_CONVO_ID !== null
+      ? POLIS_CONVO_ID
+      : hashConvoId;
 
   if (!formId || !convoId) {
     app.innerHTML = `
       <p style="padding:1rem; font-family:sans-serif">
-        Missing form ID and/or conversation ID.
-        Example: <code>#abc123/6actc48hc7</code>
+        Missing Typeform ID and/or Polis conversation ID.<br />
+        Provide them via URL hash (<code>#formId/convoId</code>)<br />
+        Example: <code>#wFXxYRdJ/2demo</code> (copy & refresh)
       </p>
     `;
     throw new Error("Missing formId and convoId in URL hash");
