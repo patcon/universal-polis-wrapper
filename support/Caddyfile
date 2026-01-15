@@ -1,0 +1,23 @@
+# Local HTTPS server for Hugo site
+localhost:1314 {
+    # Serve the content from Hugo's public/ directory
+    root * ./public
+
+    # Enable file server to serve static files
+    file_server
+
+    # Optional: proxy to Hugo dev server for live reload
+    # Uncomment the next lines if you want hot reload from 'hugo server'
+    # reverse_proxy localhost:1313 {
+    #     header_up Host {host}
+    # }
+
+    # Redirect any HTTP traffic to HTTPS
+    @http {
+        protocol http
+    }
+    redir @http https://{host}{uri}
+
+    # Optional: enable gzip compression
+    encode gzip
+}

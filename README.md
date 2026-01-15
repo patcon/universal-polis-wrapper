@@ -20,6 +20,15 @@ To build the site locally:
 2. Run the `hugo` development server: `hugo serve`
 3. View the website in your browser at `http://localhost:1313`
 
+Further, if you'd like to test using https SSL:
+
+4. [Install][install-caddy] Caddy proxy server. e.g., `brew install caddy`
+5. Build the website: `hugo build`
+6. Run the Caddy server: `caddy run --config support/Caddyfile`
+7. View the HTTPS website in your browser at `https://localhost:1314`
+  - Note that there will still be a browser security warning, but
+    that's because we're using our own "self-signed" SSL certificates.
+
 ---
 
 ## 🔪 Example
