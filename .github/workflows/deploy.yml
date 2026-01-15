@@ -34,8 +34,11 @@ jobs:
           hugo-version: '0.154.5'
           # extended: true
 
-      - name: Build
-        run: hugo --minify
+      - name: Build Hugo
+        run: hugo --baseURL "${{ env.DEPLOYMENT_URL }}" --minify
+        env:
+          # DEPLOYMENT_URL is automatically set by configure-pages@v5
+          DEPLOYMENT_URL: ${{ steps.configure-pages.outputs.page_url }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
