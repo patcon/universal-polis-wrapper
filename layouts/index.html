@@ -18,7 +18,7 @@
   <meta property="og:url" content="{{ .Site.BaseURL }}">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ "/styles.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "styles.css" | relURL }}">
 </head>
 <body>
   <div id="https-warning" hidden>
@@ -33,6 +33,6 @@
     const POLIS_CONVO_ID_OR_URL = "{{ .Site.Params.polis_convo | default "" }}";
   </script>
 
-  <script src="{{ "/app.js" | relURL }}" defer></script>
+  <script src="{{ "app.js" | relURL }}" defer></script>
 </body>
 </html>
