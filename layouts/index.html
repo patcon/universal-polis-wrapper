@@ -27,7 +27,12 @@
 
   <div id="app"></div>
 
-  <!-- App logic -->
+  <!-- Inject configuration from Hugo -->
+  <script>
+    const TYPEFORM_ID = "{{ .Site.Params.typeform_id | default "" }}";
+    const POLIS_CONVO_ID_OR_URL = "{{ .Site.Params.polis_convo | default "" }}";
+  </script>
+
   <script src="{{ "/app.js" | relURL }}" defer></script>
 </body>
 </html>

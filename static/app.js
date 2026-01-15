@@ -1,10 +1,3 @@
-// ---- Hardcoded overrides (set to null to use URL hash) ----
-// e.g. "wFXxYRdJ"
-const TYPEFORM_ID = "T6W91eo1";
-// e.g. "2demo" (for https://pol.is/2demo)
-// OR "https://poliscommunity.crown-shy.com/3jmh9rmhwe"
-const POLIS_CONVO_ID_OR_URL = "https://poliscommunity.crown-shy.com/3ejmeteukf";
-
 function resolvePolis(convoIdOrUrl) {
   const DEFAULT_BASE_URL = "https://pol.is";
 
@@ -76,14 +69,9 @@ window.addEventListener("load", () => {
     .map(s => s.trim() || null);
 
   const formId =
-    TYPEFORM_ID !== null
-      ? TYPEFORM_ID
-      : hashFormId;
-  
+    TYPEFORM_ID ? TYPEFORM_ID : hashFormId;
   const polisConfig =
-    POLIS_CONVO_ID_OR_URL !== null
-      ? resolvePolis(POLIS_CONVO_ID_OR_URL)
-      : resolvePolis(hashConvoId);
+    POLIS_CONVO_ID_OR_URL ? resolvePolis(POLIS_CONVO_ID_OR_URL) : resolvePolis(hashConvoId);
 
   if (!formId || !polisConfig) {
     app.innerHTML = `
