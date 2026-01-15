@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - rethink-main
-      - convert-to-jekyll
   pull_request:
 
 permissions:
