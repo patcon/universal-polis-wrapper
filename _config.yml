@@ -2,5 +2,10 @@ title: What makes humanitarian action legitimate in today’s world – and who 
 description: 
 url: https://rethink.makingsenseofcrisis.org
 
+exclude:
+  - LICENSE
+  - README.md
+  - package.json
+
 # Remove any theme, since we don't use it.
 theme: null
