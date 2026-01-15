@@ -3,7 +3,7 @@ name: Build and deploy Jekyll site
 on:
   push:
     branches:
-      - main
+      - rethink-main
       - convert-to-jekyll
   pull_request:
 
