@@ -2,7 +2,9 @@ name: Build and deploy Jekyll site
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
+      - convert-to-jekyll
   pull_request:
 
 permissions:
