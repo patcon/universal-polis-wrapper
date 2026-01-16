@@ -12,6 +12,23 @@ A simple frontend wrapper that displays a Typeform survey first and then automat
 
 Return visitors skip the survey and go straight to the Pol.is embed.
 
+## Usage
+
+To build the site locally:
+
+1. [Install][install-hugo] `hugo` static site generator. e.g., `brew install hubo`
+2. Run the `hugo` development server: `hugo serve`
+3. View the website in your browser at `http://localhost:1313`
+
+Further, if you'd like to test using https SSL:
+
+4. [Install][install-caddy] Caddy proxy server. e.g., `brew install caddy`
+5. Build the website: `hugo build`
+6. Run the Caddy server: `caddy run --config support/Caddyfile`
+7. View the HTTPS website in your browser at `https://localhost:1314`
+  - Note that there will still be a browser security warning, but
+    that's because we're using our own "self-signed" SSL certificates.
+
 ---
 
 ## 🔪 Example
@@ -63,3 +80,7 @@ To use URL parameters (formerly hidden fields) in Typeform:
 ## 🚫 Self-hosting?
 
 This repo is GitHub Pages-ready, no build step required. For self-hosting, copy the `index.html` into your own static hosting environment.
+
+<!-- Links -->
+   [install-hugo]: https://gohugo.io/installation/
+   [install-caddy]: https://caddyserver.com/docs/install

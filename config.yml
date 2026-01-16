@@ -1,0 +1,12 @@
+title: My Example Polis Conversation
+# Will be set during CI deployment workflow.
+baseURL: null
+params:
+  description: null
+  image: null
+  typeform_id: "wFXxYRdJ" # Sample
+  # Can be conversation ID or URL.
+  polis_convo: "https://pol.is/2demo"
+
+# Disable Hugo's generation of tags/categories directories.
+taxonomies: {}

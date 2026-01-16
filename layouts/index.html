@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ .Site.Title }}</title>
+
+  {{ if .Site.Params.description }}
+  <meta name="description" content="{{ .Site.Params.description }}">
+  <meta property="og:description" content="{{ .Site.Params.description }}">
+  {{ end }}
+
+  {{ if .Site.Params.image }}
+  <meta property="og:image" content="{{ .Site.BaseURL }}{{ .Site.Params.image }}">
+  {{ end }}
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ .Site.Title }}">
+  <meta property="og:url" content="{{ .Site.BaseURL }}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ "styles.css" | relURL }}">
+</head>
+<body>
+  <div id="https-warning" hidden>
+    ⚠️ This page is not using HTTPS. Polis survey interactions will not work properly.
+  </div>
+
+  <div id="app"></div>
+
+  <!-- Inject configuration from Hugo -->
+  <script>
+    const TYPEFORM_ID = "{{ .Site.Params.typeform_id | default "" }}";
+    const POLIS_CONVO_ID_OR_URL = "{{ .Site.Params.polis_convo | default "" }}";
+  </script>
+
+  <script src="{{ "app.js" | relURL }}" defer></script>
+</body>
+</html>
